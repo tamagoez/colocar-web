@@ -1,50 +1,30 @@
-import { useSession } from "@supabase/auth-helpers-react";
-import { useRouter } from "next/router";
+import { Auth, ThemeSupa } from "@supabase/auth-ui-react";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect } from "react";
-import { signIn } from "../scripts/auth";
+import { Router, useRouter } from "next/router";
 
-export default function Auth() {
+const Home = () => {
   const session = useSession();
+  const supabase = useSupabaseClient();
   const router = useRouter();
+
   useEffect(() => {
-    if (session) redirecturl();
-  }, [session]);
+    router.replace("/dashboard");
+  });
 
-  async function redirecturl() {
-    router.replace(accessurl);
-  }
-
-  let accessurl = "/auth";
-  if (typeof window !== "undefined") {
-    if (window.location.pathname.length === "/auth".length)
-      accessurl = "/dashboard";
-    else accessurl = window.location.pathname.slice("/auth".length) as string;
-  }
-  console.log(accessurl);
-
-  async function runSignIn() {
-    await signIn(
-      (document.getElementById("emailinput") as HTMLInputElement).value,
-      (document.getElementById("passwordinput") as HTMLInputElement).value
-    );
-  }
   return (
-    <>
+    <div className="container" style={{ padding: "50px 0 100px 0" }}>
       {!session ? (
-        <>
-          <label htmlFor="emailinput">メールアドレス</label>
-          <input type="email" id="emailinput" autoComplete="email" />
-          <label htmlFor="passwordinput">パスワード</label>
-          <input
-            type="password"
-            id="passwordinput"
-            autoComplete="current-password"
-          />
-          <button onClick={() => runSignIn()}>ログイン</button>
-        </>
+        <Auth
+          supabaseClient={supabase}
+          appearance={{ theme: ThemeSupa }}
+          theme="dark"
+        />
       ) : (
-        <p>Loading...</p>
+        <p>Please wait...</p>
       )}
-    </>
+    </div>
   );
-}
+};
+
+export default Home;

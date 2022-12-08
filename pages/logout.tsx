@@ -5,7 +5,7 @@ import { signOut } from "../scripts/auth";
 export default function SignOut() {
   const router = useRouter();
   useEffect(() => {
-    signOut().then(() => router.replace("/"));
+    signOut().then(() => window.location.replace("/"));
   }, []);
   return <p>Signouting...</p>;
 }

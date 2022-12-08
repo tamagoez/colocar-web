@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
   }
   useEffect(() => {
     checkpermission();
-  }, []);
+  }, [router]);
   return (
     <>
       <style jsx>{`
