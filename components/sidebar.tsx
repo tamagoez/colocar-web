@@ -1,5 +1,6 @@
 import { MdOutlineChat } from "react-icons/md";
 import { CgProfile, CgTimelapse } from "react-icons/cg";
+import { VscNotebook } from 'react-icons/vsc'
 import { RxIdCard } from "react-icons/rx";
 import Link from "next/link";
 import { useSession } from "@supabase/auth-helpers-react";
@@ -52,7 +53,7 @@ function AppTop() {
         </span>
         <p>名前未定</p>
       </div>
-      <Link href="/concent">
+      <Link href="/concent/dashboard">
         <div className="sidebar-button">
           <span className="sidebar-buttonicon">
             <CgTimelapse />
@@ -60,6 +61,12 @@ function AppTop() {
           <p>Concent</p>
         </div>
       </Link>
+      <div className="sidebar-button">
+        <span className="sidebar-buttonicon">
+          <VscNotebook />
+        </span>
+        <p>Notebook</p>
+      </div>
       <div className="sidebar-button">
         <span className="sidebar-buttonicon">
           <MdOutlineChat />
