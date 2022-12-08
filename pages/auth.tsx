@@ -9,8 +9,8 @@ const Home = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace("/dashboard");
-  });
+    if (session) router.replace("/dashboard");
+  }, [session]);
 
   return (
     <div className="container" style={{ padding: "50px 0 100px 0" }}>
