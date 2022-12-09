@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
           flex-wrap: nowrap;
         }
         .main-content {
-          width: 90%;
+          width: 100%;
           height: 100%;
         }
       `}</style>

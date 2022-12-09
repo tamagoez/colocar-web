@@ -1,13 +1,16 @@
 import { MdOutlineChat } from "react-icons/md";
 import { CgProfile, CgTimelapse } from "react-icons/cg";
-import { VscNotebook } from 'react-icons/vsc'
+import { VscNotebook } from "react-icons/vsc";
 import { RxIdCard } from "react-icons/rx";
 import Link from "next/link";
 import { useSession } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
 
 export default function SidebarParent() {
   const session = useSession();
   const signinstatus = session ? true : false;
+  const router = useRouter();
+  if (router.pathname === "/dashboard") return <></>;
   return (
     <>
       <style jsx>{`
@@ -47,12 +50,14 @@ function AppTop() {
           margin: 0;
         }
       `}</style>
-      <div className="sidebar-button">
-        <span className="sidebar-buttonicon">
-          <RxIdCard />
-        </span>
-        <p>名前未定</p>
-      </div>
+      <Link href="/dashboard">
+        <div className="sidebar-button">
+          <span className="sidebar-buttonicon">
+            <RxIdCard />
+          </span>
+          <p>Dashboard</p>
+        </div>
+      </Link>
       <Link href="/concent/dashboard">
         <div className="sidebar-button">
           <span className="sidebar-buttonicon">
@@ -61,12 +66,14 @@ function AppTop() {
           <p>Concent</p>
         </div>
       </Link>
-      <div className="sidebar-button">
-        <span className="sidebar-buttonicon">
-          <VscNotebook />
-        </span>
-        <p>Notebook</p>
-      </div>
+      <Link href="/whitenote/dashboard">
+        <div className="sidebar-button">
+          <span className="sidebar-buttonicon">
+            <VscNotebook />
+          </span>
+          <p>Whitenote</p>
+        </div>
+      </Link>
       <div className="sidebar-button">
         <span className="sidebar-buttonicon">
           <MdOutlineChat />
