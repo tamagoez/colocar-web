@@ -7,7 +7,7 @@ const SimpleMdeReact = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
 
-export default function editeasymde() {
+export default function EditEasymde() {
   const [value, setValue] = useState("Initial value");
 
   const onChange = useCallback((value: string) => {
