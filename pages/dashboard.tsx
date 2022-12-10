@@ -27,10 +27,10 @@ export default function Dashboard() {
     <>
       <style jsx>{`
         .clock {
+          position: fixed;
+          top: 0;
           display: flex;
           width: 100%;
-          padding: 0;
-          margin: 0;
         }
         .clock-wrap {
           margin: 0 auto;
@@ -105,11 +105,12 @@ export default function Dashboard() {
       <div className="clock">
         <div className="clock-wrap">
           <h1 className="big-clock">
-            {h}:{m}
+            {("00" + h).slice(-2)}:{("00" + m).slice(-2)}
           </h1>
           <h2 className="small-clock">{("00" + s).slice(-2)}</h2>
         </div>
       </div>
+      <div style={{ paddingBottom: "170px" }} />
       <p className="welcome">Welcome {username}!</p>
       <div className="buttons">
         <Link href="/concent/dashboard">

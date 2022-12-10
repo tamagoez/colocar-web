@@ -1,6 +1,20 @@
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 const supabase = createBrowserSupabaseClient();
 
+export async function getProfiles(userid: string) {
+  try {
+    const { data, error } = await supabase
+      .from("profile")
+      .select()
+      .eq("userid", userid)
+      .single();
+    if (error) throw error;
+    return data;
+  } catch (error: any) {
+    console.error(error.message);
+  }
+}
+
 export async function getUsername(userid: string) {
   try {
     const { data, error } = await supabase
