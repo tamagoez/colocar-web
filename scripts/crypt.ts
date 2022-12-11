@@ -30,3 +30,19 @@ export function generatePassword(length: number) {
   console.log(`[createroom] generated password: ${genpass}`);
   return genpass;
 }
+
+export function encryptText(text: string, password?: string) {
+  if (!password) return text;
+  const cipher = crypto.createCipher("aes-256-cbc", password);
+  const crypted = cipher.update(text, "utf-8", "hex");
+  const crypted_text = crypted + cipher.final("hex");
+  return crypted_text;
+}
+
+export function decryptText(text: string, password?: string) {
+  if (!password) return text;
+  const decipher = crypto.createDecipher("aes-256-cbc", password);
+  const decrypted = decipher.update(text, "hex", "utf-8");
+  const decrypted_text = decrypted + decipher.final("utf-8");
+  return decrypted_text;
+}

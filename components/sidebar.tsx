@@ -1,5 +1,5 @@
 import { MdOutlineChat } from "react-icons/md";
-import { CgProfile, CgTimelapse } from "react-icons/cg";
+import { CgDarkMode, CgProfile, CgTimelapse } from "react-icons/cg";
 import { VscNotebook } from "react-icons/vsc";
 import { RxIdCard } from "react-icons/rx";
 import Link from "next/link";
@@ -93,8 +93,12 @@ function AppTop() {
           <p>Profile</p>
         </div>
       </Link>
+      <div className="sidebar-button" onClick={() => changemode()}><span className="sidebar-buttonicon"><CgDarkMode /></span></div>
     </>
   );
+}
+function changemode() {
+
 }
 
 function GuestTop() {
@@ -125,6 +129,7 @@ function GuestTop() {
           <p>Login</p>
         </div>
       </Link>
+      <div className="sidebar-button" onClick={() => changemode()}><span className="sidebar-buttonicon"><CgDarkMode /></span></div>
     </>
   );
 }

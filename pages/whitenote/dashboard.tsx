@@ -2,6 +2,7 @@ import { addBook, getAllBooks } from "../../scripts/whitenote/book";
 import { useEffect, useState } from "react";
 import { BarSpinner } from "../../components/spinner";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface BookInterface {
   id: string;
@@ -10,6 +11,7 @@ interface BookInterface {
 }
 
 export default function Dashboard() {
+  const router = useRouter();
   const [bookslist, setBooksList] = useState<BookInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   function funcaddbook(name?: string) {
@@ -31,7 +33,10 @@ export default function Dashboard() {
       funcaddbook(bookname);
       return;
     }
-    addBook(bookname, bookpass).then((data) => console.log(data?.id));
+    addBook(bookname, bookpass).then((data) => {
+      console.log(data?.id);
+      router.push("/whitenote/${data?.id}");
+    });
   }
   async function fetchBooks() {
     setLoading(true);
@@ -46,6 +51,7 @@ export default function Dashboard() {
     <>
       {loading ? <BarSpinner /> : undefined}
       <h1>Dashboard</h1>
+      <h2>注意!!!! 絶対にパスワード保護しないで!!!!!</h2>
       <button onClick={() => funcaddbook()}>＋ ブックを追加する</button>
       {bookslist.map((x) => (
         <Link href={`/whitenote/${x.id}`} key={x.id}>

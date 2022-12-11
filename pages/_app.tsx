@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "../styles/twemoji.css";
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
