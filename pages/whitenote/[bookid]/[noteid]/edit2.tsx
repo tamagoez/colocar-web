@@ -32,7 +32,7 @@ export default function EditEasymde() {
   const anOptions = useMemo(() => {
     return {
       autosave: {
-        enabled: true,
+        enabled: typeof window !== 'undefined',
         uniqueId: noteid,
         delay,
       },

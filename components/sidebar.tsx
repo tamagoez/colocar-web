@@ -22,6 +22,11 @@ export default function SidebarParent() {
           padding-top: 0px;
           text-align: center;
         }
+        @media (prefers-color-scheme: dark) {
+          .Sidebar-Box {
+            background-color: #202124;
+          }
+        }
       `}</style>
       <div className="Sidebar-Box">
         {signinstatus ? <AppTop /> : <GuestTop />}
