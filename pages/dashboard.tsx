@@ -65,7 +65,10 @@ export default function Dashboard() {
           border: 2px white solid;
         }
         .button:hover {
-          opacity: 70%;
+          filter: brightness(1.1);
+          backdrop-filter: blur(1px);
+          filter: blur(0.5px);
+          background-color: rgba(255, 255, 255, 0.3);
         }
         .button-icon {
           font-size: 35px;

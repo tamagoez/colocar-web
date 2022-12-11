@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { BarSpinner } from "../../components/spinner";
 import Link from "next/link";
 
-interface RoomInterface {
+interface BookInterface {
   id: string;
   name: string;
   last_edit: string;
 }
 
 export default function Dashboard() {
-  const [bookslist, setBooksList] = useState<RoomInterface[]>([]);
+  const [bookslist, setBooksList] = useState<BookInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   function funcaddbook(name?: string) {
     let bookname;
@@ -48,9 +48,11 @@ export default function Dashboard() {
       <h1>Dashboard</h1>
       <button onClick={() => funcaddbook()}>＋ ブックを追加する</button>
       {bookslist.map((x) => (
-        <p key={x.id}>
-          {x.name} - {x.last_edit}
-        </p>
+        <Link href={`/whitenote/${x.id}`}>
+          <p key={x.id}>
+            {x.name} - {x.last_edit}
+          </p>
+        </Link>
       ))}
     </>
   );

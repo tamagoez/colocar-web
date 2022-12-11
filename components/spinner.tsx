@@ -1,4 +1,4 @@
-import { BarLoader } from "react-spinners";
+import { BarLoader, ScaleLoader } from "react-spinners";
 
 export function BarSpinner() {
   return (
@@ -10,4 +10,8 @@ export function BarSpinner() {
       cssOverride={{ zIndex: 9999, position: "fixed", top: 0 }}
     />
   );
+}
+
+export function ScaleSpinner() {
+  return (<ScaleLoader color="#36d7b7" />)
 }

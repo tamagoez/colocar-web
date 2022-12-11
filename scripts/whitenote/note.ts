@@ -2,7 +2,11 @@ import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { generatePassword, makeHash } from "../crypt";
 const supabase = createBrowserSupabaseClient();
 
-export async function addBook(name: string, password: string | null) {
+export async function addNote(
+  name: string,
+  password: string | null,
+  bookid: string
+) {
   try {
     const {
       data: { user },
@@ -11,12 +15,12 @@ export async function addBook(name: string, password: string | null) {
     let hashedpass;
     if (password !== null && password !== "") hashedpass = makeHash(password);
     const { data, error } = await supabase
-      .from("wn_books")
+      .from("wn_notes")
       .insert({
         userid: user.id,
         name: name,
         hashedpass: hashedpass,
-        encrypt: generatePassword(10),
+        bookid: bookid,
       })
       .select("id")
       .single();
@@ -28,25 +32,7 @@ export async function addBook(name: string, password: string | null) {
   }
 }
 
-export async function getAllBooks() {
-  try {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return;
-    const { data, error } = await supabase
-      .from("wn_books")
-      .select()
-      .eq("userid", user.id);
-    if (error) throw error;
-    if (data) return data;
-  } catch (error: any) {
-    console.error(error);
-    alert(error.message);
-  }
-}
-
-export async function getAllNotes(bookid: string) {
+export async function getNoteName(noteid: string) {
   try {
     const {
       data: { user },
@@ -54,29 +40,30 @@ export async function getAllNotes(bookid: string) {
     if (!user) return;
     const { data, error } = await supabase
       .from("wn_notes")
-      .select()
-      .eq("bookid", bookid);
+      .select("name")
+      .eq("id", noteid)
+      .single();
     if (error) throw error;
-    if (data) return data;
+    if (data) return data.name;
   } catch (error: any) {
     console.error(error);
     alert(error.message);
   }
 }
 
-export async function getBookName(bookid: string) {
+export async function getNoteNote(noteid: string) {
   try {
     const {
       data: { user },
     } = await supabase.auth.getUser();
     if (!user) return;
     const { data, error } = await supabase
-      .from("wn_books")
-      .select("name")
-      .eq("id", bookid)
+      .from("wn_notes")
+      .select("note")
+      .eq("id", noteid)
       .single();
     if (error) throw error;
-    if (data) return data.name;
+    if (data) return data.note;
   } catch (error: any) {
     console.error(error);
     alert(error.message);
