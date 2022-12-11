@@ -48,7 +48,7 @@ export default function Dashboard() {
       <h1>Dashboard</h1>
       <button onClick={() => funcaddbook()}>＋ ブックを追加する</button>
       {bookslist.map((x) => (
-        <Link href={`/whitenote/${x.id}`}>
+        <Link href={`/whitenote/${x.id}`} key={x.id}>
           <p key={x.id}>
             {x.name} - {x.last_edit}
           </p>
