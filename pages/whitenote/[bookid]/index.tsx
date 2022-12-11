@@ -55,7 +55,7 @@ export default function BookTop() {
       <h3>{bookname}</h3>
       <button onClick={() => funcaddnote()}>＋ ノートを追加する</button>
       {noteslist.map((x) => (
-        <Link href={`/whitenote/${bookid}/${x.id}/edit2`} key={x.id}>
+        <Link href={`/whitenote/${bookid}/${x.id}/edit`} key={x.id}>
           <p key={x.id}>{x.name}</p>
         </Link>
       ))}

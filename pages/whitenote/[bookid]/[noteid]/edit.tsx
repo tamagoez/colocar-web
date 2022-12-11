@@ -1,34 +1,43 @@
-import "@uiw/react-md-editor/markdown-editor.css";
-import "@uiw/react-markdown-preview/markdown.css";
+// import EasyMDE from "easymde";
+import "easymde/dist/easymde.min.css";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
-import { useState } from "react";
-import rehypeSanitize from "rehype-sanitize";
-import remarkBreaks from "remark-breaks";
-import gfm from "remark-gfm";
-import emoji from 'remark-emoji';
+import { getNoteName, getNoteNote } from "../../../../scripts/whitenote/note";
+import { BarSpinner } from "../../../../components/spinner";
 
-const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
+const SimpleMdeReact = dynamic(() => import("react-simplemde-editor"), {
+  ssr: false,
+});
 
-function HomePage() {
-  const [value, setValue] = useState<any>("**Hello world!!!**");
-  return (
-    <>
-      <style jsx>{`
-        .editor {
-          width: 100%;
-          height: 100%;
-        }
-      `}</style>
-      <div className="editor">
-        <MDEditor value={value} onChange={setValue} previewOptions={{
-          rehypePlugins: [[rehypeSanitize]],
-          remarkPlugins: [[gfm, remarkBreaks, emoji]],
-          unwrapDisallowed: false,
-          linkTarget: "_blank"
-        }} />
-      </div>
-    </>
-  );
+export default function EditEasymde() {
+  let noteid = "1";
+  if (typeof window !== "undefined")
+    noteid = window.location.pathname.slice("/whitenote/1/".length).substring(0, 0 - "/edit".length) as string;
+  const [loading, setLoading] = useState<boolean>(true);
+  const [value, setValue] = useState("読み込み中");
+  const [notename, setNotename] = useState("読み込み中")
+  const onChange = useCallback((value: string) => {
+    setValue(value);
+  }, []);
+  useEffect(() => { fetchdata(noteid) }, [noteid])
+  async function fetchdata(noteid: string) {
+    setLoading(true);
+    setNotename(await getNoteName(noteid))
+    setValue(await getNoteNote(noteid))
+    setLoading(false);
+    return;
+  }
+   const delay = 1000;
+  // const autosavedValue = localStorage.getItem(`smde_${noteid}`) || "";
+  const anOptions = useMemo(() => {
+  return {
+      autosave: {
+        enabled: typeof window !== 'undefined',
+        uniqueId: noteid,
+        delay,
+      },
+    };
+  }, [delay]);
+
+  return <>{loading ? <BarSpinner /> : undefined}<h3>{notename}</h3><SimpleMdeReact value={value} onChange={onChange} options={anOptions} /></>;
 }
-
-export default HomePage;
