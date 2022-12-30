@@ -1,7 +1,7 @@
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 const supabase = createBrowserSupabaseClient();
 
-export async function getProfiles(userid: string) {
+export async function fetchProfile(userid: string) {
   try {
     const { data, error } = await supabase
       .from("profile")

@@ -79,12 +79,14 @@ function AppTop() {
           <p>Whitenote</p>
         </div>
       </Link>
-      <div className="sidebar-button">
-        <span className="sidebar-buttonicon">
-          <MdOutlineChat />
-        </span>
-        <p>Message</p>
-      </div>
+      <Link href="/chat">
+        <div className="sidebar-button">
+          <span className="sidebar-buttonicon">
+            <MdOutlineChat />
+          </span>
+          <p>Message</p>
+        </div>
+      </Link>
       <Link href="/profile">
         <div className="sidebar-button">
           <span className="sidebar-buttonicon">
@@ -93,13 +95,15 @@ function AppTop() {
           <p>Profile</p>
         </div>
       </Link>
-      <div className="sidebar-button" onClick={() => changemode()}><span className="sidebar-buttonicon"><CgDarkMode /></span></div>
+      <div className="sidebar-button" onClick={() => changemode()}>
+        <span className="sidebar-buttonicon">
+          <CgDarkMode />
+        </span>
+      </div>
     </>
   );
 }
-function changemode() {
-
-}
+function changemode() {}
 
 function GuestTop() {
   return (
@@ -129,7 +133,11 @@ function GuestTop() {
           <p>Login</p>
         </div>
       </Link>
-      <div className="sidebar-button" onClick={() => changemode()}><span className="sidebar-buttonicon"><CgDarkMode /></span></div>
+      <div className="sidebar-button" onClick={() => changemode()}>
+        <span className="sidebar-buttonicon">
+          <CgDarkMode />
+        </span>
+      </div>
     </>
   );
 }

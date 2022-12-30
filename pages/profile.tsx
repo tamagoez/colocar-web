@@ -1,7 +1,7 @@
 import { useUser } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
 import { BarSpinner } from "../components/spinner";
-import { getProfiles, upsertProfile } from "../scripts/profile";
+import { fetchProfile, upsertProfile } from "../scripts/profile";
 
 export default function Profile() {
   const user = useUser();
@@ -17,7 +17,7 @@ export default function Profile() {
 
   async function getProfile() {
     if (!user) return;
-    const fetchdata = await getProfiles(user!.id);
+    const fetchdata = await fetchProfile(user!.id);
     setUsername(fetchdata.username);
     setDisplayHandleId(fetchdata.displayhandleid);
     setBirthday(fetchdata.birthday);
