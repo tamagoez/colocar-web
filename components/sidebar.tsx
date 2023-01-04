@@ -18,9 +18,19 @@ export default function SidebarParent() {
           height: 100%;
           width: 5%;
           min-width: 50px;
+          max-width: 80px;
           background-color: #f5f3f2;
           padding-top: 0px;
           text-align: center;
+          z-index: 10000;
+          filter: drop-shadow(-30px 0 20px rgba(0, 0, 0, 0.9));
+          transition: all 300ms 0s ease;
+          position: fixed;
+          top: 0;
+        }
+        .Sidebar-Box:hover {
+          width: 80px;
+          filter: drop-shadow(-18px 0 20px rgba(0, 0, 0, 0.9));
         }
         @media (prefers-color-scheme: dark) {
           .Sidebar-Box {
@@ -38,7 +48,7 @@ export default function SidebarParent() {
 function AppTop() {
   return (
     <>
-      <style jsx>{`
+      <style jsx global>{`
         .sidebar-button {
           border-radius: 15px;
           margin-top: 25px;
@@ -51,7 +61,7 @@ function AppTop() {
           font-size: 26px;
         }
         .sidebar-button p {
-          font-size: 11px;
+          font-size: 10px;
           margin: 0;
         }
       `}</style>

@@ -12,3 +12,16 @@ export async function fetchRoomLists() {
     console.error(error.message);
   }
 }
+
+export async function fetchRoomChats(roomid: string) {
+  try {
+    const { data, error } = await supabase
+      .from("ch_chats")
+      .select("id, userid, type, text, url, created_at")
+      .eq("roomid", roomid);
+    if (error) throw error;
+    return data;
+  } catch (error: any) {
+    console.error(error.message);
+  }
+}

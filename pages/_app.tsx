@@ -28,9 +28,18 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
           flex-direction: row;
           flex-wrap: nowrap;
         }
+        .parent-frame {
+          width: 100%;
+          display: flex;
+          height: 100%;
+        }
+        .content-padding {
+          width: 5.5%;
+          min-width: 50px;
+          max-width: 85px;
+        }
         .main-content {
           width: 100%;
-          height: 100%;
         }
       `}</style>
       <SessionContextProvider
@@ -39,8 +48,11 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
       >
         <div className="content-wrapper">
           <SidebarParent />
-          <div className="main-content">
-            <Component {...pageProps} />
+          <div className="parent-frame">
+            <div className="content-padding" />
+            <div className="main-content">
+              <Component {...pageProps} />
+            </div>
           </div>
         </div>
       </SessionContextProvider>
