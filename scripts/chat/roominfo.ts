@@ -93,3 +93,19 @@ export async function fetchRoomData(roomid: string) {
     console.error(error.message);
   }
 }
+
+export async function fetchRoomMembersNMe(roomid: string) {
+  try {
+    const userid = await getUserId();
+    if (!userid) return;
+    const { data, error } = await supabase
+      .from("ch_members")
+      .select("userid")
+      .eq("roomid", roomid)
+      .neq("userid", userid);
+    if (error) throw error;
+    return data;
+  } catch (error: any) {
+    console.error(error.message);
+  }
+}

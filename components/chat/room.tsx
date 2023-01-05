@@ -67,6 +67,8 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
   }
   useEffect(() => {
     addnewmessage(newMessage);
+  }, [newMessage]);
+  useEffect(() => {
     let innerHeight = window.innerHeight;
     let elementslists = document.getElementsByClassName("chatbox");
     let scrollpos =
@@ -76,7 +78,7 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
       console.log("scroll");
       scroll();
     }
-  }, [newMessage]);
+  }, [messages]);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
   function scroll() {
     messagesEndRef.current?.scrollIntoView({
@@ -131,6 +133,8 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
           display: flex;
           height: 48px;
           background-color: white;
+          background-color: rgb(255, 255, 255, 0.8);
+          backdrop-filter: blur(5px);
         }
         .bottom-bar textarea {
           width: 90%;
@@ -150,7 +154,7 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
               changeroomname();
             }}
           >
-            名前変える
+            変更
           </button>
         </header>
         <div id="chat_chat">

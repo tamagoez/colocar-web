@@ -5,6 +5,7 @@ import { RxIdCard } from "react-icons/rx";
 import Link from "next/link";
 import { useSession } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
+import { playSound } from "../scripts/notification/sound";
 
 export default function SidebarParent() {
   const session = useSession();
@@ -117,7 +118,9 @@ function AppTop() {
     </>
   );
 }
-function changemode() {}
+function changemode() {
+  playSound();
+}
 
 function GuestTop() {
   return (

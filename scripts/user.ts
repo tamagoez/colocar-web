@@ -14,6 +14,20 @@ export async function getUserId() {
   return user?.id;
 }
 
+export async function getUserIntId(userid: string) {
+  try {
+    const { data, error } = await supabase
+      .from("profile")
+      .select("intid")
+      .eq("userid", userid)
+      .single();
+    if (error) throw error;
+    return data.intid;
+  } catch (error: any) {
+    console.error(error.message);
+  }
+}
+
 export async function getUsernameFromUuid(userid: string) {
   try {
     const { data, error } = await supabase
