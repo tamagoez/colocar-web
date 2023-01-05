@@ -17,7 +17,7 @@ export default function SidebarParent() {
         .Sidebar-Box {
           height: 100%;
           width: 5%;
-          min-width: 50px;
+          min-width: 30px;
           max-width: 80px;
           background-color: #f5f3f2;
           padding-top: 0px;
@@ -31,6 +31,9 @@ export default function SidebarParent() {
         .Sidebar-Box:hover {
           width: 80px;
           filter: drop-shadow(-18px 0 20px rgba(0, 0, 0, 0.9));
+        }
+        .Sidebar-Box:hover > .Sidebar-Box:hover .sidebar-button p {
+          display: block;
         }
         @media (prefers-color-scheme: dark) {
           .Sidebar-Box {
@@ -63,6 +66,7 @@ function AppTop() {
         .sidebar-button p {
           font-size: 10px;
           margin: 0;
+          display: none;
         }
       `}</style>
       <Link href="/dashboard">

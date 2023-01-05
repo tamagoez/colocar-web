@@ -1,16 +1,19 @@
 import { fetchRoomLists } from "../../scripts/chat/roominfo";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { createRoom } from "../../scripts/chat/room";
 
 interface listtype {
-  id: string;
-  name: string;
+  roomid: string;
+  roomname: string;
   type: string;
   permit: boolean;
 }
 
 export function WideMenu({ userlist: listdata }: { userlist?: object[] }) {
-  const [userlist, setUserlist] = useState<object[] | undefined>(listdata);
+  const router = useRouter();
+  const [userlist, setUserlist] = useState<any>(listdata);
   const [searchv, setSearchv] = useState<string>("");
   async function fetchLists() {
     if (!userlist) setUserlist(await fetchRoomLists());
@@ -19,6 +22,14 @@ export function WideMenu({ userlist: listdata }: { userlist?: object[] }) {
     fetchLists();
     console.log(userlist);
   }, []);
+  async function createRoomPrompt() {
+    const oppoid = prompt(
+      "追加したい相手のハンドルIDを入力してください。(現時点では一人のみ対応しています)"
+    );
+    if (!oppoid) return;
+    const roomid = await createRoom(oppoid);
+    router.push(`/chat/${roomid}`);
+  }
   return (
     <>
       <style jsx>{`
@@ -49,6 +60,9 @@ export function WideMenu({ userlist: listdata }: { userlist?: object[] }) {
         onChange={(e) => setSearchv(e.target.value)}
         placeholder="ルーム名を検索"
       />
+      <div style={{ cursor: "pointer" }} onClick={() => createRoomPrompt()}>
+        <p>+ 新しいルームを作成する</p>
+      </div>
       {userlist?.map((x: any) => (
         <ListComponent prop={x} key={x.id} searchv={searchv} />
       ))}
@@ -57,7 +71,7 @@ export function WideMenu({ userlist: listdata }: { userlist?: object[] }) {
 }
 
 function ListComponent({ prop, searchv }: { prop: listtype; searchv: string }) {
-  if (searchv === "" || ~prop.name.indexOf(searchv)) {
+  if (searchv === "" || ~prop.roomname.indexOf(searchv)) {
     return (
       <>
         <style jsx>{`
@@ -73,8 +87,8 @@ function ListComponent({ prop, searchv }: { prop: listtype; searchv: string }) {
             border-radius: 20px 20px 20px 20px;
           }
         `}</style>
-        <Link href={`/chat/${prop.id}`}>
-          <div>{prop.name}</div>
+        <Link href={`/chat/${prop.roomid}`}>
+          <div>{prop.roomname}</div>
         </Link>
       </>
     );

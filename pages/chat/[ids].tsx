@@ -8,7 +8,14 @@ export default function TempOneroom() {
   console.log("roomid:", roomid);
   return (
     <>
-      <DefaultRoom roomid={roomid} />
+      <style jsx>{`
+        .chatframe {
+          width: 100%;
+        }
+      `}</style>
+      <div className="chatframe">
+        <DefaultRoom roomid={roomid} />
+      </div>
     </>
   );
 }

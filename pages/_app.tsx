@@ -20,6 +20,21 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
   useEffect(() => {
     checkpermission();
   }, [router]);
+  if (typeof location !== "undefined")
+    if (location.pathname === "/dashboard") {
+      return (
+        <>
+          <style jsx>{`
+            .main-content {
+              width: 100%;
+            }
+          `}</style>
+          <div className="main-content">
+            <Component {...pageProps} />
+          </div>
+        </>
+      );
+    }
   return (
     <>
       <style jsx>{`
@@ -34,8 +49,8 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
           height: 100%;
         }
         .content-padding {
-          width: 5.5%;
-          min-width: 50px;
+          width: 6%;
+          min-width: 31px;
           max-width: 85px;
         }
         .main-content {
