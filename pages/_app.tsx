@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { getUserIntId } from "../scripts/user";
 import NotificationComponent from "../components/notification";
 import { playSound, prepareSound } from "../scripts/notification/sound";
+import getUA from "../lib/getUA";
 
 function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
   const [supabase] = useState(() => createBrowserSupabaseClient());
@@ -53,47 +54,50 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
         </>
       );
     }
-  return (
-    <>
-      <style jsx>{`
-        .content-wrapper {
-          display: flex;
-          flex-direction: row;
-          flex-wrap: nowrap;
-        }
-        .parent-frame {
-          width: 100%;
-          display: flex;
-          height: 100%;
-        }
-        .content-padding {
-          width: 6%;
-          min-width: 31px;
-          max-width: 85px;
-        }
-        .main-content {
-          width: 100%;
-        }
-      `}</style>
-      <SessionContextProvider
-        supabaseClient={supabase}
-        initialSession={pageProps.initialSession}
-      >
-        <div className="content-wrapper">
-          <audio id="notifysound" preload="auto">
-            <source src="/chat/xylophone.mp3" type="audio/mp3" />
-          </audio>
-          <SidebarParent />
-          <div className="parent-frame">
-            <div className="content-padding" />
-            <div className="main-content">
-              <Component {...pageProps} />
+  const smartphone = getUA();
+  if (false) return <></>;
+  else
+    return (
+      <>
+        <style jsx>{`
+          .content-wrapper {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+          }
+          .parent-frame {
+            width: 100%;
+            display: flex;
+            height: 100%;
+          }
+          .content-padding {
+            width: 6%;
+            min-width: 31px;
+            max-width: 85px;
+          }
+          .main-content {
+            width: 100%;
+          }
+        `}</style>
+        <SessionContextProvider
+          supabaseClient={supabase}
+          initialSession={pageProps.initialSession}
+        >
+          <div className="content-wrapper">
+            <audio id="notifysound" preload="auto">
+              <source src="/chat/xylophone.mp3" type="audio/mp3" />
+            </audio>
+            <SidebarParent />
+            <div className="parent-frame">
+              <div className="content-padding" />
+              <div className="main-content">
+                <Component {...pageProps} />
+              </div>
             </div>
           </div>
-        </div>
-      </SessionContextProvider>
-    </>
-  );
+        </SessionContextProvider>
+      </>
+    );
 }
 export default MyApp;
 

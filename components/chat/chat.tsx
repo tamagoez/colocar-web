@@ -3,6 +3,7 @@ import gfm from "remark-gfm";
 import Twemoji from "react-twemoji";
 import remarkBreaks from "remark-breaks";
 import { decryptChat } from "../../scripts/chat/crypt";
+import { CgTrash } from "react-icons/cg";
 
 interface ccprop {
   id: string;
@@ -67,6 +68,10 @@ function MyChatCompo({ text }: { text: string }) {
           padding-left: 8px;
           margin-block-end: 0;
         }
+        .chat_mycompo_wrap button {
+          outline: none;
+          background-color: rgb(0, 0, 0, 0);
+        }
       `}</style>
       <div className="chat_mycompo">
         <div className="chat_mycompo_wrap">
@@ -81,6 +86,9 @@ function MyChatCompo({ text }: { text: string }) {
               </ReactMarkdown>
             </Twemoji>
           </div>
+          <button>
+            <CgTrash />
+          </button>
         </div>
       </div>
     </>

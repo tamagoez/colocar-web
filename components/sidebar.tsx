@@ -67,7 +67,7 @@ function AppTop() {
         .sidebar-button p {
           font-size: 10px;
           margin: 0;
-          display: none;
+          display: block;
         }
       `}</style>
       <Link href="/dashboard">

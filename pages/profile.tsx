@@ -1,9 +1,11 @@
 import { useUser } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BarSpinner } from "../components/spinner";
 import { fetchProfile, upsertProfile } from "../scripts/profile";
 
 export default function Profile() {
+  const router = useRouter()
   const user = useUser();
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState<string>("");
@@ -82,6 +84,7 @@ export default function Profile() {
         />
       </div>
       <button onClick={() => updateProfile()}>保存する</button>
+      <button onClick={() => router.push("/logout")}>ログアウト</button>
     </>
   );
 }
