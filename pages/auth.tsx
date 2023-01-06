@@ -17,7 +17,7 @@ const Home = () => {
   }
   
   useEffect(() => {
-    if (session) router.replace("/dashboard");
+    tempInit(session)
   }, [session]);
 
   return (
