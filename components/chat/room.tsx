@@ -110,7 +110,7 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
       elementslists[elementslists.length - 1]?.getBoundingClientRect().bottom;
     console.log(scrollpos);
     if (scrollpos <= innerHeight - 50) {
-      setNewmes(null);
+      setNewmes("");
     }
   }
   async function takeydown(event: any) {
