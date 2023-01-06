@@ -19,7 +19,7 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
   const [newMessage, setNewMessage] = useState(null);
   const [newMessageId, setNewMessageId] = useState(null);
   const [roomname, setRoomname] = useState("Chat");
-  const [newmes, setNewmes] = useState(null);
+  const [newmes, setNewmes] = useState<string>("");
   useEffect(() => {
     chatinit(roomid);
   }, [roomid]);
@@ -211,7 +211,7 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
         <div
           className="bottom-newchat"
           style={{
-            display: newmes !== null ? "block" : "none",
+            display: newmes !== "" ? "block" : "none",
             cursor: "pointer",
           }}
           onClick={() => scroll()}
