@@ -5,9 +5,10 @@ import { getUserId } from "./user"
 export async function initProfile() {
   try {
     const userid = await getUserId()
+    const temphandleid = Math.random().toString(32).substring(2)
     const { error } = await supabase
       .from("profile")
-      .insert({userid: userid, username: "guest", handleid: Math.random().toString(32).substring(2)});
+      .insert({userid: userid, username: "guest", handleid: temphandleid, displayhandleid: temphandleid});
     if (error) throw error;
     return false;
   } catch (error: any) {
