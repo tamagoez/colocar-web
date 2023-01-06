@@ -86,9 +86,6 @@ function MyChatCompo({ text }: { text: string }) {
               </ReactMarkdown>
             </Twemoji>
           </div>
-          <button>
-            <CgTrash />
-          </button>
         </div>
       </div>
     </>

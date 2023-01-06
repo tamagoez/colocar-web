@@ -5,6 +5,7 @@ import { getUsername } from "../scripts/profile";
 import { VscNotebook } from "react-icons/vsc";
 import Link from "next/link";
 import { CgTimelapse } from "react-icons/cg";
+import { MdOutlineChat } from "react-icons/md";
 
 export default function Dashboard() {
   const [date, setDate] = useState(new Date());
@@ -130,6 +131,14 @@ export default function Dashboard() {
               <VscNotebook />
             </p>
             <p className="button-text">WhiteNote</p>
+          </div>
+        </Link>
+        <Link href="/chat">
+          <div className="button">
+            <p className="button-icon">
+              <MdOutlineChat />
+            </p>
+            <p className="button-text">Chat</p>
           </div>
         </Link>
       </div>

@@ -12,12 +12,12 @@ const Home = () => {
   async function tempInit(session: any) {
     if (!session) return;
     const alinit = await initProfile();
-    if (alinit) router.replace("/dashboard")
-    else router.replace("/profile")
+    if (alinit) router.replace("/dashboard");
+    else router.replace("/profile");
   }
-  
+
   useEffect(() => {
-    tempInit(session)
+    tempInit(session);
   }, [session]);
 
   return (
@@ -25,8 +25,52 @@ const Home = () => {
       {!session ? (
         <Auth
           supabaseClient={supabase}
-          appearance={{ theme: ThemeSupa }}
+          appearance={{
+            theme: ThemeSupa,
+            style: { input: { fontSize: "16px" } },
+          }}
           theme="dark"
+          providers={["twitter"]}
+          localization={{
+            variables: {
+              sign_up: {
+                email_label: "メールアドレス",
+                password_label: "パスワード作成",
+                email_input_placeholder: "Your email address",
+                password_input_placeholder: "Your password",
+                button_label: "新規登録",
+                social_provider_text: "こいつバグってる→",
+                link_text: "ログインの代わりに新規登録する",
+              },
+              sign_in: {
+                email_label: "メールアドレス",
+                password_label: "パスワード",
+                email_input_placeholder: "Your email address",
+                password_input_placeholder: "Your password",
+                button_label: "ログイン",
+                social_provider_text: "こいつバグってる→",
+                link_text: "新規登録の代わりにログインする",
+              },
+              magic_link: {
+                email_input_label: "Email address",
+                email_input_placeholder: "Your email address",
+                button_label: "Send Magic Link",
+                link_text: "Send a magic link email",
+              },
+              forgotten_password: {
+                email_label: "Email address",
+                password_label: "Your Password",
+                email_input_placeholder: "Your email address",
+                button_label: "Send reset password instructions",
+                link_text: "Forgot your password?",
+              },
+              update_password: {
+                password_label: "New password",
+                password_input_placeholder: "Your new password",
+                button_label: "Update password",
+              },
+            },
+          }}
         />
       ) : (
         <p>Please wait...</p>
