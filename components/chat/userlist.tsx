@@ -1,4 +1,4 @@
-import { fetchRoomLists } from "../../scripts/chat/roominfo";
+import { fetchRoomLists, fetchLastChatView } from "../../scripts/chat/roominfo";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -71,13 +71,22 @@ export function WideMenu({ userlist: listdata }: { userlist?: object[] }) {
 }
 
 function ListComponent({ prop, searchv }: { prop: listtype; searchv: string }) {
+  const [lastchat, setLastchat] = useState("");
+  const fetchd = async () => {
+    setLastchat((await fetchLastChatView(prop.roomid))?.substring(0, 19));
+  };
+  useEffect(() => {
+    fetchd();
+  }, [prop]);
   if (searchv === "" || ~prop.roomname.indexOf(searchv)) {
     return (
       <>
         <style jsx>{`
           div {
-            background-color: gray;
+            background-color: #f5f3f2;
             border-radius: 10px 10px 10px 10px;
+            border: gray 1px solid;
+            margin-bottom: 2px;
             height: 70px;
             transition: all 300ms 0s ease;
           }
@@ -86,9 +95,24 @@ function ListComponent({ prop, searchv }: { prop: listtype; searchv: string }) {
             cursor: pointer;
             border-radius: 20px 20px 20px 20px;
           }
+          #roomname {
+            font-weight: 600;
+            margin: 0;
+            margin-top: 10px;
+            margin-left: 10px;
+            font-size: 17px;
+          }
+          #lastchat {
+            margin: 0;
+            margin-left: 11px;
+            font-size: 15px;
+          }
         `}</style>
         <Link href={`/chat/${prop.roomid}`}>
-          <div>{prop.roomname}</div>
+          <div>
+            <p id="roomname">{prop.roomname}</p>
+            <p id="lastchat">{lastchat}</p>
+          </div>
         </Link>
       </>
     );

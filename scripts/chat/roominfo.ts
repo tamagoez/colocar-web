@@ -3,6 +3,22 @@ import { resolve } from "path";
 import { getUserId } from "../user";
 const supabase = createBrowserSupabaseClient();
 
+export async function fetchLastChatView(roomid: string) {
+  try {
+    const { data, error } = await supabase
+      .from("ch_chats")
+      .select("created_at")
+      .eq("roomid", roomid)
+      .order("id", { ascending: true })
+      .limit(1)
+      .single();
+    if (error) throw error;
+    return data.created_at;
+  } catch (error: any) {
+    console.error(error.message);
+  }
+}
+
 export async function fetchRoomListsold() {
   try {
     const userid = await getUserId();

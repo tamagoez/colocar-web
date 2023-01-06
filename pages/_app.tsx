@@ -105,6 +105,7 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
           supabaseClient={supabase}
           initialSession={pageProps.initialSession}
         >
+          <NotificationWrapper userintid={userintid} supabase={supabase} />
           <div className="content-wrapper">
             <audio id="notifysound" preload="auto">
               <source src="/chat/xylophone.mp3" type="audio/mp3" />
@@ -147,6 +148,7 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
           supabaseClient={supabase}
           initialSession={pageProps.initialSession}
         >
+          <NotificationWrapper userintid={userintid} supabase={supabase} />
           <div className="content-wrapper">
             <audio id="notifysound" preload="auto">
               <source src="/chat/xylophone.mp3" type="audio/mp3" />
@@ -190,8 +192,9 @@ function NotificationWrapper({
       <>
         <style jsx>{`
           #notifybox {
-            position: fixed;
-            top: 0;
+            display: flex;
+            justify-content: center;
+            width: 100vw;
             z-index: 10001;
           }
         `}</style>

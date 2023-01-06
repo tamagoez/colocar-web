@@ -24,7 +24,7 @@ export default function SidebarParent() {
           background-color: #f5f3f2;
           padding-top: 0px;
           text-align: center;
-          z-index: 10000;
+          z-index: 9999;
           filter: drop-shadow(-30px 0 20px rgba(0, 0, 0, 0.9));
           transition: all 300ms 0s ease;
           position: fixed;
@@ -59,7 +59,7 @@ function AppTop({ smartphone }: { smartphone: boolean }) {
           flex-direction: ${smartphone ? "row" : "column"};
           gap: 30px;
           justify-content: center;
-          margin-top: ${smartphone ? "8px" : "15px"};
+          margin-top: ${smartphone ? "9px" : "15px"};
         }
         .sidebar-button {
           border-radius: 15px;
@@ -182,7 +182,7 @@ export function SmartphoneBar() {
           background-color: #f5f3f2;
           padding-top: 0px;
           text-align: center;
-          z-index: 10000;
+          z-index: 9999;
           filter: drop-shadow(0 -10px 20px rgba(0, 0, 0, 0.2));
           transition: all 300ms 0s ease;
           position: fixed;

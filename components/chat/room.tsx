@@ -18,7 +18,8 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
   const [messages, setMessages] = useState<object[] | undefined>([]);
   const [newMessage, setNewMessage] = useState(null);
   const [newMessageId, setNewMessageId] = useState(null);
-  const [roomname, setRoomname] = useState("Loading");
+  const [roomname, setRoomname] = useState("Chat");
+  const [newmes, setNewmes] = useState(null);
   useEffect(() => {
     chatinit(roomid);
   }, [roomid]);
@@ -69,21 +70,23 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
     if (data.userid !== userid) {
       playSound();
     }
+    let innerHeight = window.innerHeight;
+    let elementslists = document.getElementsByClassName("chatbox");
+    let scrollpos =
+      elementslists[elementslists.length - 2]?.getBoundingClientRect().bottom;
+    console.log(`innerHeight: ${innerHeight} / scrollpos: ${scrollpos}`);
+    if (scrollpos <= innerHeight - 50) {
+      console.log("scroll");
+      setTimeout(() => {
+        scroll();
+      }, 20);
+    } else {
+      setNewmes("新規メッセージがあります");
+    }
   }
   useEffect(() => {
     addnewmessage(newMessage);
   }, [newMessage]);
-  useEffect(() => {
-    let innerHeight = window.innerHeight;
-    let elementslists = document.getElementsByClassName("chatbox");
-    let scrollpos =
-      elementslists[elementslists.length - 1]?.getBoundingClientRect().top;
-    console.log(`innerHeight: ${innerHeight} / scrollpos: ${scrollpos}`);
-    if (scrollpos <= innerHeight) {
-      console.log("scroll");
-      scroll();
-    }
-  }, [messages]);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
   function scroll() {
     messagesEndRef.current?.scrollIntoView({
@@ -91,17 +94,37 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
       behavior: "smooth",
     });
   }
-
+  if (typeof window !== "undefined") {
+    window.addEventListener(
+      "scroll",
+      () => {
+        newchatbarcheck();
+      },
+      { once: false }
+    );
+  }
+  function newchatbarcheck() {
+    let innerHeight = window.innerHeight;
+    let elementslists = document.getElementsByClassName("chatbox");
+    let scrollpos =
+      elementslists[elementslists.length - 1]?.getBoundingClientRect().bottom;
+    console.log(scrollpos);
+    if (scrollpos <= innerHeight - 50) {
+      setNewmes(null);
+    }
+  }
   async function takeydown(event: any) {
     if (!event.shiftKey && event.key === "Enter") {
       const textval = (
         document.getElementById("chatinput")! as HTMLTextAreaElement
       ).value;
+      (document.getElementById("chatinput") as HTMLInputElement).value = "";
+      document.getElementById("chatinput")!.focus;
       await sendMessage(textval, roomid);
       setTimeout(() => {
         (document.getElementById("chatinput") as HTMLInputElement).value = "";
         document.getElementById("chatinput")!.focus;
-      }, 0);
+      }, 20);
     }
   }
   function changeroomname() {
@@ -130,6 +153,18 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
         .chat_header h1 {
           margin: 0;
           font-size: 24px;
+        }
+        .bottom-newchat {
+          position: fixed;
+          bottom: 48px;
+          width: 100%;
+          background-color: rgb(0, 0, 0, 0.6);
+          color: white;
+          height: 30px;
+        }
+        .bottom-newchat p {
+          margin: 0;
+          margin-top: 4px;
         }
         .bottom-bar {
           position: fixed;
@@ -173,6 +208,16 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
           ))}
         </div>
         <div ref={messagesEndRef} style={{ height: "50px" }} id="scrollpos" />
+        <div
+          className="bottom-newchat"
+          style={{
+            display: newmes !== null ? "block" : "none",
+            cursor: "pointer",
+          }}
+          onClick={() => scroll()}
+        >
+          <p>{newmes}</p>
+        </div>
         <div className="bottom-bar">
           <textarea id="chatinput" onKeyDown={(e) => takeydown(e)}></textarea>
         </div>
