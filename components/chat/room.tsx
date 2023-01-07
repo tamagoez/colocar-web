@@ -97,7 +97,7 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
     });
   }
   if (typeof window !== "undefined") {
-    let timer = null;
+    let timer: any = null;
     window.addEventListener(
       "scroll",
       () => {
