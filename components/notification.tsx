@@ -44,7 +44,7 @@ export default function NotificationComponent({
       `}</style>
       <div className="noticomp">
         <p>
-          {type == 1
+          {type === "1"
             ? "新規メッセージがあるっぽいです"
             : "通知が来ると何か表示されるはず"}
         </p>
