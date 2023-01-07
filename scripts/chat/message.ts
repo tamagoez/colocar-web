@@ -22,6 +22,7 @@ export async function sendMessage(text: string, roomid: string) {
       .single();
     if (error) throw error;
     const roommember = await fetchRoomMembersNMe(roomid);
+    console.log("roommember:", roommember);
     roommember?.forEach((e) => {
       createNotiChat(e.userid, data.id);
     });

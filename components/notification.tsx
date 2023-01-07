@@ -25,20 +25,29 @@ export default function NotificationComponent({
           filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.1));
           text-align: center;
           border-radius: 0 0 10px 10px;
-          transition: all 500ms 0s ease;
-          top: -92px;
+          transition: all 400ms 0s ease;
+          top: -90px;
+          opacity: 0.6;
+        }
+        .noticomp p {
+          padding-top: 15px;
         }
         .noticomp:hover {
+          opacity: 1;
           top: 0;
         }
         #bottomnoti {
-          transform: translateY(22px);
+          transform: translateY(-26px);
           color: gray;
-          font-size: 14px;
+          font-size: 12px;
         }
       `}</style>
       <div className="noticomp">
-        <p>多分ここに表示されるんだと思う。</p>
+        <p>
+          {type == 1
+            ? "新規メッセージがあるっぽいです"
+            : "通知が来ると何か表示されるはず"}
+        </p>
         <p></p>
         <p id="bottomnoti">新規通知があります: ID{value}</p>
       </div>

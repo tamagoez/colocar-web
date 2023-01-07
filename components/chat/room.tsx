@@ -34,9 +34,6 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
     if (typeof window !== "undefined")
       window.sessionStorage.setItem("roompass", JSON.stringify(mempass));
     await fetchMessages(roomid);
-    messagesEndRef.current?.scrollIntoView({
-      block: "start",
-    });
     supabase
       .channel(`public:ch_chats:roomid=eq.${roomid}`)
       .on(
@@ -48,6 +45,11 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
         }
       )
       .subscribe();
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({
+        block: "start",
+      });
+    }, 20);
   }
   function addnewmessage(data: any) {
     if (!data) return;
@@ -95,10 +97,14 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
     });
   }
   if (typeof window !== "undefined") {
+    let timer = null;
     window.addEventListener(
       "scroll",
       () => {
-        newchatbarcheck();
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          newchatbarcheck();
+        }, 500);
       },
       { once: false }
     );

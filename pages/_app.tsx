@@ -66,16 +66,18 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
     (!spsize && nobarpc.includes(router.pathname))
   ) {
     return (
-      <>
+      <main className={ZenKakuGothicNew_normal.className}>
         <style jsx>{`
           .main-content {
-            width: 100%;
+            width: 100vw;
           }
         `}</style>
+
         <div className="main-content">
+          <NotificationWrapper userintid={userintid} supabase={supabase} />
           <Component {...pageProps} />
         </div>
-      </>
+      </main>
     );
   }
   const smartphone = getUA();
@@ -175,19 +177,24 @@ function NotificationWrapper({
   supabase: any;
 }) {
   const [notify, setNotify] = useState({ value: "", type: "" });
-  supabase
-    .channel(`public:notification:userid=eq.${userintid}`)
-    .on(
-      "postgres_changes",
-      { event: "*", schema: "*", table: "notification" },
-      (payload: any) => {
-        console.log("Notification received!", payload.new);
-        setNotify(payload.new);
-        playSound();
-      }
-    )
-    .subscribe();
-  if (userintid)
+
+  if (userintid) {
+    supabase
+      .channel(`public:notification:userid=eq.${userintid}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "*", table: "notification" },
+        (payload: any) => {
+          let data = payload.new;
+          if (data.userid === userintid) {
+            console.log("Notification received!", payload.new);
+            setNotify(payload.new);
+            playSound();
+          }
+        }
+      )
+      .subscribe();
+    console.info("subscribe noti:", userintid);
     return (
       <>
         <style jsx>{`
@@ -207,5 +214,6 @@ function NotificationWrapper({
         </div>
       </>
     );
+  }
   return null;
 }

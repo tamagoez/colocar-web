@@ -44,7 +44,11 @@ export default function SidebarParent() {
         }
       `}</style>
       <div className="Sidebar-Box">
-        {signinstatus ? <AppTop smartphone={false} /> : <GuestTop />}
+        {signinstatus ? (
+          <AppTop smartphone={false} />
+        ) : (
+          <GuestTop smartphone={false} />
+        )}
       </div>
     </>
   );
@@ -131,38 +135,47 @@ function changemode() {
   playSound();
 }
 
-function GuestTop() {
+function GuestTop({ smartphone }: { smartphone: boolean }) {
   return (
     <>
       <style jsx>{`
+        .bar-wrapper {
+          display: flex;
+          flex-direction: ${smartphone ? "row" : "column"};
+          gap: 30px;
+          justify-content: center;
+          margin-top: ${smartphone ? "5px" : "15px"};
+        }
         .sidebar-button {
           border-radius: 15px;
-          margin-top: 25px;
         }
         .sidebar-button:hover {
           background-color: #d1ae15;
           color: white;
         }
         .sidebar-buttonicon {
-          font-size: 26px;
+          font-size: ${smartphone ? "30px" : "26px"};
         }
         .sidebar-button p {
-          font-size: 11px;
+          font-size: 10px;
           margin: 0;
+          display: ${smartphone ? "none" : "block"};
         }
       `}</style>
-      <Link href="/auth">
-        <div className="sidebar-button">
+      <div className="bar-wrapper">
+        <Link href="/auth">
+          <div className="sidebar-button">
+            <span className="sidebar-buttonicon">
+              <CgProfile />
+            </span>
+            <p>Login</p>
+          </div>
+        </Link>
+        <div className="sidebar-button" onClick={() => changemode()}>
           <span className="sidebar-buttonicon">
-            <CgProfile />
+            <CgDarkMode />
           </span>
-          <p>Login</p>
         </div>
-      </Link>
-      <div className="sidebar-button" onClick={() => changemode()}>
-        <span className="sidebar-buttonicon">
-          <CgDarkMode />
-        </span>
       </div>
     </>
   );
@@ -183,7 +196,7 @@ export function SmartphoneBar() {
           padding-top: 0px;
           text-align: center;
           z-index: 9999;
-          filter: drop-shadow(0 -10px 20px rgba(0, 0, 0, 0.2));
+          filter: drop-shadow(0 -10px 15px rgba(0, 0, 0, 0.2));
           transition: all 300ms 0s ease;
           position: fixed;
           top: 0;
@@ -198,7 +211,11 @@ export function SmartphoneBar() {
         }
       `}</style>
       <div className="Sidebar-Box">
-        {signinstatus ? <AppTop smartphone={true} /> : <GuestTop />}
+        {signinstatus ? (
+          <AppTop smartphone={true} />
+        ) : (
+          <GuestTop smartphone={true} />
+        )}
       </div>
     </>
   );

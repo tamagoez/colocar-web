@@ -22,6 +22,7 @@ export async function getUserIntId(userid: string) {
       .eq("userid", userid)
       .single();
     if (error) throw error;
+    console.log(`userid -> ${data.intid}`);
     return data.intid;
   } catch (error: any) {
     console.error(error.message);

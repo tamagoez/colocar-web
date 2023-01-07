@@ -126,6 +126,16 @@ function OtherChatCompo({ text }: { text: string }) {
           padding-left: 8px;
           margin-block-end: 0;
         }
+        .chat_othercompo_prop {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
+        .chat_othercompo_prop_time {
+          margin-top: auto;
+          font-size: 9px;
+          color: gray;
+        }
       `}</style>
       <div className="chat_othercompo">
         <div className="chat_othercompo_wrap">
@@ -139,6 +149,9 @@ function OtherChatCompo({ text }: { text: string }) {
                 {text}
               </ReactMarkdown>
             </Twemoji>
+          </div>
+          <div className="chat_othercompo_prop">
+            <p className="chat_othercompo_prop_time">01:00</p>
           </div>
         </div>
       </div>

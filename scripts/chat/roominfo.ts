@@ -100,7 +100,7 @@ export async function fetchRoomData(roomid: string) {
   try {
     const { data, error } = await supabase
       .from("ch_rooms")
-      .select("type, permit")
+      .select("type, permit, usersid")
       .eq("id", roomid)
       .single();
     if (error) throw error;

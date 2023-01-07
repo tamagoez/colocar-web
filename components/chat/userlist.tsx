@@ -9,6 +9,7 @@ interface listtype {
   roomname: string;
   type: string;
   permit: boolean;
+  usersid: string[];
 }
 
 export function WideMenu({ userlist: listdata }: { userlist?: object[] }) {
@@ -40,7 +41,6 @@ export function WideMenu({ userlist: listdata }: { userlist?: object[] }) {
           margin-left: 5%;
           width: 90%;
           margin-top: 10px;
-          margin-bottom: 10px;
           border-radius: 10px 10px 10px 10px;
           border: 1px solid gray;
           font-size: 16px;
@@ -53,6 +53,9 @@ export function WideMenu({ userlist: listdata }: { userlist?: object[] }) {
           font-size: 18px;
           height: 40px;
         }
+        .create_room {
+          background: rgba(0, 0, 0, 0.1);
+        }
       `}</style>
       <h1>Chat</h1>
       <input
@@ -60,7 +63,11 @@ export function WideMenu({ userlist: listdata }: { userlist?: object[] }) {
         onChange={(e) => setSearchv(e.target.value)}
         placeholder="ルーム名を検索"
       />
-      <div style={{ cursor: "pointer" }} onClick={() => createRoomPrompt()}>
+      <div
+        className="create_room"
+        style={{ cursor: "pointer" }}
+        onClick={() => createRoomPrompt()}
+      >
         <p>+ 新しいルームを作成する</p>
       </div>
       {userlist?.map((x: any) => (
@@ -86,12 +93,12 @@ function ListComponent({ prop, searchv }: { prop: listtype; searchv: string }) {
             background-color: #f5f3f2;
             border-radius: 10px 10px 10px 10px;
             border: gray 1px solid;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
             height: 70px;
             transition: all 300ms 0s ease;
           }
           div:hover {
-            background-color: gray;
+            background-color: rgba(0, 0, 0, 0.2);
             cursor: pointer;
             border-radius: 20px 20px 20px 20px;
           }
