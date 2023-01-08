@@ -39,7 +39,7 @@ const Home = () => {
                 email_input_placeholder: "Your email address",
                 password_input_placeholder: "Your password",
                 button_label: "新規登録",
-                social_provider_text: "こいつバグってる→",
+                social_provider_text: "Login with",
                 link_text: "ログインの代わりに新規登録する",
               },
               sign_in: {
@@ -48,7 +48,7 @@ const Home = () => {
                 email_input_placeholder: "Your email address",
                 password_input_placeholder: "Your password",
                 button_label: "ログイン",
-                social_provider_text: "こいつバグってる→",
+                social_provider_text: "Login with",
                 link_text: "新規登録の代わりにログインする",
               },
               magic_link: {

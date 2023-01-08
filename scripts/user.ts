@@ -17,13 +17,13 @@ export async function getUserId() {
 export async function getUserIntId(userid: string) {
   try {
     const { data, error } = await supabase
-      .from("profile")
-      .select("intid")
+      .from("profiles")
+      .select("userint")
       .eq("userid", userid)
       .single();
     if (error) throw error;
-    console.log(`userid -> ${data.intid}`);
-    return data.intid;
+    console.log(`userid -> ${data.userint}`);
+    return data.userint;
   } catch (error: any) {
     console.error(error.message);
   }
@@ -32,7 +32,7 @@ export async function getUserIntId(userid: string) {
 export async function getUsernameFromUuid(userid: string) {
   try {
     const { data, error } = await supabase
-      .from("profile")
+      .from("profiles")
       .select("username")
       .eq("userid", userid)
       .single();

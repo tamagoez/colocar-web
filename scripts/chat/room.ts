@@ -69,7 +69,7 @@ export async function initMember(
         userid: userid,
         roomid: roomid,
         roomname: await getUsernameFromUuid(oppoid),
-        password: generatePassword(10),
+        password: generatePassword(7),
       })
       .select("id")
       .single();

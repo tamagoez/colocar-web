@@ -9,7 +9,7 @@ export async function createNotiChat(userid: string, chatid: string) {
   // // roomid -> option
   try {
     const intuserid = await getUserIntId(userid);
-    const { error } = await supabase.from("notification").insert({
+    const { error } = await supabase.from("notifications").insert({
       type: "1",
       userid: intuserid,
       value: chatid,

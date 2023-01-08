@@ -1,26 +1,29 @@
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 const supabase = createBrowserSupabaseClient();
-import { getUserId } from "./user"
+import { getUserId } from "./user";
 
 export async function initProfile() {
   try {
-    const userid = await getUserId()
-    const temphandleid = Math.random().toString(32).substring(2)
-    const { error } = await supabase
-      .from("profile")
-      .insert({userid: userid, username: "guest", handleid: temphandleid, displayhandleid: temphandleid});
+    const userid = await getUserId();
+    const temphandleid = Math.random().toString(32).substring(2);
+    const { error } = await supabase.from("profiles").insert({
+      userid: userid,
+      username: "guest",
+      handleid: temphandleid,
+      displayhandleid: temphandleid,
+    });
     if (error) throw error;
     return false;
   } catch (error: any) {
-    console.error(error)
-    return true
+    console.error(error);
+    return true;
   }
 }
 
 export async function fetchProfile(userid: string) {
   try {
     const { data, error } = await supabase
-      .from("profile")
+      .from("profiles")
       .select()
       .eq("userid", userid)
       .single();
@@ -34,7 +37,7 @@ export async function fetchProfile(userid: string) {
 export async function getUsername(userid: string) {
   try {
     const { data, error } = await supabase
-      .from("profile")
+      .from("profiles")
       .select("username")
       .eq("userid", userid)
       .single();
@@ -48,7 +51,7 @@ export async function getUsername(userid: string) {
 export async function getDisplayHandleId(userid: string) {
   try {
     const { data, error } = await supabase
-      .from("profile")
+      .from("profiles")
       .select("displayhandleid")
       .eq("userid", userid)
       .single();
@@ -62,7 +65,7 @@ export async function getDisplayHandleId(userid: string) {
 export async function getBirthday(userid: string) {
   try {
     const { data, error } = await supabase
-      .from("profile")
+      .from("profiles")
       .select("birthday")
       .eq("userid", userid)
       .single();
@@ -76,7 +79,7 @@ export async function getBirthday(userid: string) {
 export async function getBio(userid: string) {
   try {
     const { data, error } = await supabase
-      .from("profile")
+      .from("profiles")
       .select("bio")
       .eq("userid", userid)
       .single();
@@ -90,7 +93,7 @@ export async function getBio(userid: string) {
 export async function upsertProfile(profiledata: object) {
   try {
     const { data, error } = await supabase
-      .from("profile")
+      .from("profiles")
       .upsert(profiledata)
       .select();
     if (error) throw error;

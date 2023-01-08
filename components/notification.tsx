@@ -1,6 +1,7 @@
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 const supabase = createBrowserSupabaseClient();
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getAdminNote } from "../scripts/notification/fetch";
 import { playSound } from "../scripts/notification/sound";
 
 export default function NotificationComponent({
@@ -12,6 +13,13 @@ export default function NotificationComponent({
   type: string;
   value: string;
 }) {
+  const [admintext, setAdmintext] = useState("");
+  async function fetchadmin() {
+    setAdmintext(await getAdminNote());
+  }
+  useEffect(() => {
+    fetchadmin();
+  }, []);
   return (
     <>
       <style jsx>{`
@@ -33,11 +41,11 @@ export default function NotificationComponent({
           padding-top: 15px;
         }
         .noticomp:hover {
-          opacity: 1;
+          opacity: 0.9;
           top: 0;
         }
         #bottomnoti {
-          transform: translateY(-26px);
+          transform: translateY(-34px);
           color: gray;
           font-size: 12px;
         }
@@ -49,7 +57,11 @@ export default function NotificationComponent({
             : "通知が来ると何か表示されるはず"}
         </p>
         <p></p>
-        <p id="bottomnoti">新規通知があります: ID{value}</p>
+        {!value ? (
+          <p id="bottomnoti">管理者からのお知らせ: {admintext}</p>
+        ) : (
+          <p id="bottomnoti">新規通知があります: ID{value}</p>
+        )}
       </div>
     </>
   );
