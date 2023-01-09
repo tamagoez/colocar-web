@@ -3,9 +3,10 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BarSpinner } from "../components/spinner";
 import { fetchProfile, upsertProfile } from "../scripts/profile";
+import { getUserInt } from "../scripts/user";
 
 export default function Profile() {
-  const router = useRouter()
+  const router = useRouter();
   const user = useUser();
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState<string>("");
@@ -15,11 +16,12 @@ export default function Profile() {
 
   useEffect(() => {
     getProfile();
-  }, [user]);
+  }, []);
 
   async function getProfile() {
+    if (username) return;
     if (!user) return;
-    const fetchdata = await fetchProfile(user!.id);
+    const fetchdata = await fetchProfile(await getUserInt(user!.id));
     setUsername(fetchdata.username);
     setDisplayHandleId(fetchdata.displayhandleid);
     setBirthday(fetchdata.birthday);

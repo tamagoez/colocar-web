@@ -1,11 +1,11 @@
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { generatePassword } from "../crypt";
-import { getUserId, getUsernameFromUuid, getUuidFromHandleId } from "../user";
+import { getUserInt, getUsernameFromInt, getUuidFromHandleId } from "../user";
 const supabase = createBrowserSupabaseClient();
 
 export async function changeRoomname(roomid: string, name: string) {
   try {
-    const userid = await getUserId();
+    const userid = await getUserInt();
     if (!userid) return;
     const { error } = await supabase
       .from("ch_members")
@@ -23,7 +23,7 @@ export async function changeRoomname(roomid: string, name: string) {
 
 export async function createRoom(otherids: string) {
   try {
-    const userid = await getUserId();
+    const userid = await getUserInt();
     // 一人のみの仮対応アップデートなので
     // 後日、複数人が対応するようにする
     const otherid = await getUuidFromHandleId(otherids);
@@ -68,7 +68,7 @@ export async function initMember(
       .insert({
         userid: userid,
         roomid: roomid,
-        roomname: await getUsernameFromUuid(oppoid),
+        roomname: await getUsernameFromInt(oppoid),
         password: generatePassword(7),
       })
       .select("id")

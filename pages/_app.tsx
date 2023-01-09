@@ -5,7 +5,7 @@ import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
 import SidebarParent, { SmartphoneBar } from "../components/sidebar";
 import { useRouter } from "next/router";
-import { getUserIntId } from "../scripts/user";
+import { getUserInt } from "../scripts/user";
 import NotificationComponent from "../components/notification";
 import { LockFull } from "../components/lock";
 import { playSound, prepareSound } from "../scripts/notification/sound";
@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
   }
   async function userinit(data: any) {
     setUseruuid(data.id);
-    setUserintid(await getUserIntId(data.id));
+    setUserintid(await getUserInt());
   }
   useEffect(() => {
     checkpermission();
@@ -71,6 +71,7 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
     );
   }
   if (
+    false && 
     typeof window !== "undefined" &&
     window.localStorage.getItem("adminunlock") !== "true" &&
     router.pathname !== "/getprivillage"

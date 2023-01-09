@@ -7,14 +7,16 @@ export async function getUser() {
   } = await supabase.auth.getUser();
   return user;
 }
-export async function getUserId() {
+export async function getUserUUId() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
   return user?.id;
 }
 
-export async function getUserIntId(userid: string) {
+export async function getUserInt(useruuid?: string) {
+  let userid = useruuid;
+  if (!useruuid) userid = await getUserUUId();
   try {
     const { data, error } = await supabase
       .from("profiles")
@@ -29,12 +31,12 @@ export async function getUserIntId(userid: string) {
   }
 }
 
-export async function getUsernameFromUuid(userid: string) {
+export async function getUsernameFromInt(userint: string) {
   try {
     const { data, error } = await supabase
       .from("profiles")
       .select("username")
-      .eq("userid", userid)
+      .eq("userint", userint)
       .single();
     if (error) throw error;
     return data.username;

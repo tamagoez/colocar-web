@@ -30,7 +30,7 @@ const Home = () => {
             style: { input: { fontSize: "16px" } },
           }}
           theme="dark"
-          providers={["twitter"]}
+          providers={["google", "twitter", "discord"]}
           localization={{
             variables: {
               sign_up: {

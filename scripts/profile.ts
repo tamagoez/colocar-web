@@ -1,10 +1,10 @@
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 const supabase = createBrowserSupabaseClient();
-import { getUserId } from "./user";
+import { getUserUUId, getUserInt } from "./user";
 
 export async function initProfile() {
   try {
-    const userid = await getUserId();
+    const userid = await getUserUUId();
     const temphandleid = Math.random().toString(32).substring(2);
     const { error } = await supabase.from("profiles").insert({
       userid: userid,
@@ -20,12 +20,12 @@ export async function initProfile() {
   }
 }
 
-export async function fetchProfile(userid: string) {
+export async function fetchProfile(userint: string) {
   try {
     const { data, error } = await supabase
       .from("profiles")
       .select()
-      .eq("userid", userid)
+      .eq("userint", userint)
       .single();
     if (error) throw error;
     return data;
@@ -34,12 +34,12 @@ export async function fetchProfile(userid: string) {
   }
 }
 
-export async function getUsername(userid: string) {
+export async function getUsername(userint: string) {
   try {
     const { data, error } = await supabase
       .from("profiles")
       .select("username")
-      .eq("userid", userid)
+      .eq("userint", userint)
       .single();
     if (error) throw error;
     return data.username;
@@ -48,12 +48,12 @@ export async function getUsername(userid: string) {
   }
 }
 
-export async function getDisplayHandleId(userid: string) {
+export async function getDisplayHandleId(userint: string) {
   try {
     const { data, error } = await supabase
       .from("profiles")
       .select("displayhandleid")
-      .eq("userid", userid)
+      .eq("userint", userint)
       .single();
     if (error) throw error;
     return data.displayhandleid;
@@ -62,12 +62,12 @@ export async function getDisplayHandleId(userid: string) {
   }
 }
 
-export async function getBirthday(userid: string) {
+export async function getBirthday(userint: string) {
   try {
     const { data, error } = await supabase
       .from("profiles")
       .select("birthday")
-      .eq("userid", userid)
+      .eq("userint", userint)
       .single();
     if (error) throw error;
     return data.birthday;
@@ -76,12 +76,12 @@ export async function getBirthday(userid: string) {
   }
 }
 
-export async function getBio(userid: string) {
+export async function getBio(userint: string) {
   try {
     const { data, error } = await supabase
       .from("profiles")
       .select("bio")
-      .eq("userid", userid)
+      .eq("userint", userint)
       .single();
     if (error) throw error;
     return data.bio;

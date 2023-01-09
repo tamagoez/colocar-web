@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { BarSpinner } from "../../components/spinner";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { LockFull } from "../../components/lock";
 
 interface BookInterface {
   id: string;
@@ -49,6 +50,7 @@ export default function Dashboard() {
   }, []);
   return (
     <>
+      <LockFull />
       {loading ? <BarSpinner /> : undefined}
       <h1>Dashboard</h1>
       <h2>注意!!!! 絶対にパスワード保護しないで!!!!!</h2>
