@@ -34,12 +34,14 @@ export async function fetchProfile(userint: string) {
   }
 }
 
-export async function getUsername(userint: string) {
+export async function getUsername(userint?: string) {
+  let userid = userint;
+  if (!userint) userid = await getUserInt();
   try {
     const { data, error } = await supabase
       .from("profiles")
       .select("username")
-      .eq("userint", userint)
+      .eq("userint", userid)
       .single();
     if (error) throw error;
     return data.username;

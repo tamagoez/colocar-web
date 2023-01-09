@@ -1,5 +1,5 @@
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { getUserIntId } from "../user";
+import { getUserInt } from "../user";
 const supabase = createBrowserSupabaseClient();
 
 export async function createNotiChat(userid: string, chatid: string) {
@@ -8,7 +8,7 @@ export async function createNotiChat(userid: string, chatid: string) {
   // chatid -> value
   // // roomid -> option
   try {
-    const intuserid = await getUserIntId(userid);
+    const intuserid = await getUserInt(userid);
     const { error } = await supabase.from("notifications").insert({
       type: "1",
       userid: intuserid,

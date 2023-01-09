@@ -11,15 +11,14 @@ export default function Dashboard() {
   const [date, setDate] = useState(new Date());
   const time = [date.getHours(), date.getMinutes(), date.getSeconds()];
   const [h, m, s] = time;
-  const [username, setUsername] = useState<string>("Colocar");
+  const [username, setUsername] = useState("");
   const user = useUser();
   useEffect(() => {
     getProfile();
-  }, [user]);
+  }, []);
 
   async function getProfile() {
-    if (!user) return;
-    setUsername(await getUsername(user!.id));
+    setUsername(await getUsername());
   }
   setInterval(() => {
     setDate(new Date());
@@ -57,7 +56,7 @@ export default function Dashboard() {
           height: 100vh;
           width: 100vw;
           z-index: -1;
-          filter: brightness(90%);
+          filter: brightness(80%) blur(1.5px);
         }
         .button {
           width: 100px;
@@ -117,31 +116,65 @@ export default function Dashboard() {
       <div style={{ paddingBottom: "170px" }} />
       <p className="welcome">Welcome {username}!</p>
       <div className="buttons">
-        <Link href="/concent/dashboard">
-          <div className="button">
-            <p className="button-icon">
-              <CgTimelapse />
-            </p>
-            <p className="button-text">Concent</p>
-          </div>
-        </Link>
-        <Link href="/whitenote/dashboard">
-          <div className="button">
-            <p className="button-icon">
-              <VscNotebook />
-            </p>
-            <p className="button-text">WhiteNote</p>
-          </div>
-        </Link>
-        <Link href="/chat">
-          <div className="button">
-            <p className="button-icon">
-              <MdOutlineChat />
-            </p>
-            <p className="button-text">Chat</p>
-          </div>
-        </Link>
+        <ListButton
+          url="/concent/dashboard"
+          title="Concent"
+          icon={<CgTimelapse />}
+        />
+        <ListButton
+          url="/whitenote/dashboard"
+          title="Whitenote"
+          icon={<VscNotebook />}
+        />
+        <ListButton url="/chat" title="Chat" icon={<MdOutlineChat />} />
       </div>
     </>
+  );
+}
+
+function ListButton({
+  url,
+  title,
+  icon,
+}: {
+  url: string;
+  title: string;
+  icon: any;
+}) {
+  return (
+    <Link href={url}>
+      <style jsx>{`
+        .button {
+          width: 100px;
+          height: 100px;
+          border-radius: 15px;
+          border: 2px white solid;
+        }
+        .button:hover {
+          backdrop-filter: blur(3px);
+          filter: blur(0.5px) drop-shadow(0px 0px 20px rgba(122, 122, 122, 1));
+          background-color: rgba(255, 255, 255, 0.2);
+        }
+        .button-icon {
+          font-size: 35px;
+          color: white;
+          text-shadow: 0px 0px 3px white;
+          margin: 0;
+          text-align: center;
+          padding-top: 15px;
+        }
+        .button-text {
+          color: white;
+          font-size: 14px;
+          margin: 0;
+          text-align: center;
+          text-shadow: 0px 0px 3px white;
+        }
+      `}</style>
+      <div className="button">
+        <p className="button-icon">{icon}</p>
+        <p className="button-text">{title}</p>
+      </div>
+    </Link>
   );
 }

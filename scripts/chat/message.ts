@@ -1,4 +1,4 @@
-import { getUser } from "../user";
+import { getUser, getUserInt } from "../user";
 import { encryptChat } from "./crypt";
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { createNotiChat } from "../notification/create";
@@ -7,16 +7,15 @@ const supabase = createBrowserSupabaseClient();
 
 export async function sendMessage(text: string, roomid: string) {
   try {
-    const user = await getUser();
-    if (!user) return;
-    const inserttext = encryptChat(text, user.id);
+    const userid = await getUserInt();
+    const inserttext = encryptChat(text, userid);
     const { data, error } = await supabase
       .from("ch_chats")
       .insert({
-        userid: user.id,
+        userid: userid,
         roomid: roomid,
         text: inserttext,
-        type: "text",
+        type: 1,
       })
       .select("id")
       .single();

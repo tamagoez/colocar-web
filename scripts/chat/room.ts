@@ -1,6 +1,10 @@
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { generatePassword } from "../crypt";
-import { getUserInt, getUsernameFromInt, getUuidFromHandleId } from "../user";
+import {
+  getUserInt,
+  getUsernameFromInt,
+  getUserIntFromHandleId,
+} from "../user";
 const supabase = createBrowserSupabaseClient();
 
 export async function changeRoomname(roomid: string, name: string) {
@@ -26,13 +30,13 @@ export async function createRoom(otherids: string) {
     const userid = await getUserInt();
     // 一人のみの仮対応アップデートなので
     // 後日、複数人が対応するようにする
-    const otherid = await getUuidFromHandleId(otherids);
+    const otherid = await getUserIntFromHandleId(otherids);
     if (!userid) return;
     const userarray = [userid, otherid];
     const { data, error } = await supabase
       .from("ch_rooms")
       .insert({
-        type: "personal",
+        type: 1,
         usersid: userarray,
         permit: false,
         name: userid,
@@ -41,14 +45,8 @@ export async function createRoom(otherids: string) {
       .single();
     if (error) throw error;
     userarray.forEach((e) => {
-      console.log(
-        userarray.filter((item) => item.match(new RegExp(e)) == null)[0]
-      );
-      initMember(
-        e,
-        data.id,
-        userarray.filter((item) => item.match(new RegExp(e)) == null)[0]
-      );
+      console.log(userarray.filter((item) => item !== e)[0]);
+      initMember(e, data.id, userarray.filter((item) => item !== e)[0]);
     });
     return data.id;
   } catch (error: any) {
@@ -69,7 +67,7 @@ export async function initMember(
         userid: userid,
         roomid: roomid,
         roomname: await getUsernameFromInt(oppoid),
-        password: generatePassword(7),
+        password: generatePassword(5),
       })
       .select("id")
       .single();

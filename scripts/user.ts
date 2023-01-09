@@ -48,11 +48,24 @@ export async function getUsernameFromInt(userint: string) {
 export async function getUuidFromHandleId(handleid: string) {
   try {
     const { data, error } = await supabase
-      .from("profile")
+      .from("profiles")
       .select("userid")
       .eq("handleid", handleid.toLowerCase())
       .single();
     return data!.userid;
+  } catch (error: any) {
+    console.error(error.message);
+  }
+}
+
+export async function getUserIntFromHandleId(handleid: string) {
+  try {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("userint")
+      .eq("handleid", handleid.toLowerCase())
+      .single();
+    return data!.userint;
   } catch (error: any) {
     console.error(error.message);
   }

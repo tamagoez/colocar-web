@@ -1,6 +1,6 @@
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { resolve } from "path";
-import { getUserId } from "../user";
+import { getUserInt, getUserUUId } from "../user";
 const supabase = createBrowserSupabaseClient();
 
 export async function fetchLastChatView(roomid: string) {
@@ -21,7 +21,7 @@ export async function fetchLastChatView(roomid: string) {
 
 export async function fetchRoomListsold() {
   try {
-    const userid = await getUserId();
+    const userid = await getUserInt();
     if (!userid) return;
     const { data, error } = await supabase
       .from("ch_members")
@@ -53,7 +53,7 @@ export async function fetchRoomListsold() {
 
 export async function fetchRoomLists() {
   try {
-    const userid = await getUserId();
+    const userid = await getUserInt();
     if (!userid) return;
     const { data, error } = await supabase
       .from("ch_members")
@@ -68,7 +68,7 @@ export async function fetchRoomLists() {
 
 export async function fetchRoomName(roomid: string) {
   try {
-    const userid = await getUserId();
+    const userid = await getUserInt();
     if (!userid) return;
     const { data, error } = await supabase
       .from("ch_members")
@@ -112,7 +112,7 @@ export async function fetchRoomData(roomid: string) {
 
 export async function fetchRoomMembersNMe(roomid: string) {
   try {
-    const userid = await getUserId();
+    const userid = await getUserInt();
     if (!userid) return;
     const { data, error } = await supabase
       .from("ch_members")

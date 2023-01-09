@@ -8,7 +8,7 @@ import { fetchRoomChats, fetchRoomName } from "../../scripts/chat/roominfo";
 import { ChatComponent } from "./chat";
 import { sendMessage } from "../../scripts/chat/message";
 import { decryptChat } from "../../scripts/chat/crypt";
-import { getUserId } from "../../scripts/user";
+import { getUserInt } from "../../scripts/user";
 import { changeRoomname } from "../../scripts/chat/room";
 import { playSound } from "../../scripts/notification/sound";
 
@@ -28,7 +28,7 @@ export function DefaultRoom({ roomid }: { roomid: string }) {
     setMessages(await fetchRoomChats(roomid));
   }
   async function chatinit(roomid: string) {
-    setUserid(await getUserId());
+    setUserid(await getUserInt());
     setRoomname(await fetchRoomName(roomid));
     const mempass = await fetchMemberPass(roomid);
     if (typeof window !== "undefined")

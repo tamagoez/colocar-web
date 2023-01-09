@@ -71,7 +71,7 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
     );
   }
   if (
-    false && 
+    false &&
     typeof window !== "undefined" &&
     window.localStorage.getItem("adminunlock") !== "true" &&
     router.pathname !== "/getprivillage"
