@@ -40,7 +40,7 @@ export function LockFull() {
             <IoIosWarning />
           </span>
           <br />
-          <span style={{ fontWight: "600" }}>
+          <span style={{ fontWeight: "600" }}>
             動作が不安定なため、管理者以外のアクセスを制限しています。
             <br />
             誠に申し訳ございません。
