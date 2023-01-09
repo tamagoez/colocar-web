@@ -7,6 +7,7 @@ import SidebarParent, { SmartphoneBar } from "../components/sidebar";
 import { useRouter } from "next/router";
 import { getUserIntId } from "../scripts/user";
 import NotificationComponent from "../components/notification";
+import { LockFull } from "../components/lock";
 import { playSound, prepareSound } from "../scripts/notification/sound";
 import getUA from "../lib/getUA";
 import { nobarpc, nobarsp } from "../files/ignorebar";
@@ -17,9 +18,28 @@ const ZenKakuGothicNew_normal = Zen_Kaku_Gothic_New({
 });
 
 function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
-  const [supabase] = useState(() => createBrowserSupabaseClient());
-  const allowurls = ["/", "/login", "/signup", "/auth", "/features"];
   const router = useRouter();
+  if (
+    typeof window !== "undefined" &&
+    window.localStorage.getItem("adminunlock") !== "true" &&
+    router.pathname !== "/getprivillage"
+  ) {
+    return (
+      <>
+        <LockFull />
+      </>
+    );
+  }
+  const [supabase] = useState(() => createBrowserSupabaseClient());
+  const allowurls = [
+    "/",
+    "/login",
+    "/signup",
+    "/auth",
+    "/features",
+    "/getprivillage",
+  ];
+
   const [useruuid, setUseruuid] = useState();
   const [userintid, setUserintid] = useState();
   const [spsize, setSpsize] = useState(false);
