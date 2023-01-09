@@ -19,17 +19,6 @@ const ZenKakuGothicNew_normal = Zen_Kaku_Gothic_New({
 
 function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
   const router = useRouter();
-  if (
-    typeof window !== "undefined" &&
-    window.localStorage.getItem("adminunlock") !== "true" &&
-    router.pathname !== "/getprivillage"
-  ) {
-    return (
-      <>
-        <LockFull />
-      </>
-    );
-  }
   const [supabase] = useState(() => createBrowserSupabaseClient());
   const allowurls = [
     "/",
@@ -79,6 +68,17 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
         prepareSound();
       },
       { once: true }
+    );
+  }
+  if (
+    typeof window !== "undefined" &&
+    window.localStorage.getItem("adminunlock") !== "true" &&
+    router.pathname !== "/getprivillage"
+  ) {
+    return (
+      <>
+        <LockFull />
+      </>
     );
   }
   if (
