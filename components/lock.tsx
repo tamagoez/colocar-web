@@ -56,4 +56,5 @@ export function LockFull() {
         </div>
       </main>
     );
+  return <></>;
 }
